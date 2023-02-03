@@ -1,0 +1,194 @@
+/* .serviceDiv{
+    width:90%;
+    margin:0px auto;
+    display: grid;
+    row-gap: 25px;
+    justify-items: center;
+    grid-template-columns: auto auto;
+}
+
+.serviceDiv a{
+    cursor: auto;
+}
+.service{
+    background-color: white;
+    border:1px solid black;
+    color: black;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius:1%;
+    margin-right: 5%;
+    width:40vw;
+    padding: 10px;
+}
+.imageSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width:30%;
+}
+
+.description{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width:70%;
+}
+
+.image{
+    border-radius: 50%;
+    width:8vw;
+    height:8vw;
+}
+.separator{
+    width:100%;
+    height:0.5px;
+    background-color:black;
+    margin: 3px 0;
+}
+.subbody{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.body{
+    right:0;
+    top:0;
+    flex-direction: row;
+    align-items: center;
+}
+.userImage{
+    width:2.5vw;
+    height:2.5vw;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.userName{
+    font-size: small;
+}
+a{
+    text-decoration: none;
+    color: rgb(54, 51, 51);
+    font-weight: 600;
+}
+
+.footer{
+    display: flex;
+    justify-content: center; 
+}
+
+.footer div{
+    margin:0px 10px;
+}
+
+.footer button{
+    cursor: pointer;
+    color: white;
+    background-color: cornflowerblue;
+    font-weight: 600;
+    border: 0;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.footer a{
+    cursor: pointer;
+    font-size:20px;
+}
+
+.price{
+    margin: 10px 0;
+    font-size:15px;
+}
+@media screen and (max-width:650px) {
+    .serviceDiv{
+        grid-template-columns: auto;
+    }
+    .service{
+        width:80vw;
+    }
+    .image{
+        width: 20vw;
+        height: 20vw;
+    }
+    .userImage{
+        width:6vw;
+        height:6vw;
+    }
+}
+
+
+.serviceDiv.false .service{
+    background-color: black;
+    border:1px solid white;
+    color: white;
+}
+.serviceDiv.true .service{
+    background-color: white;
+    border:1px solid black;
+    color: black;
+}
+
+.serviceDiv.false .separator{
+    background-color: white;
+} */
+
+.serviceDiv{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 40px;
+    row-gap: 40px;
+    justify-content: center;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-bottom: 10px solid #4CAF50;
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+  
+  .title {
+    color: grey;
+    font-size: 18px;
+  }
+  
+  .serviceDiv button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    /* background-color: white; */
+    text-align: center;
+    cursor: pointer;
+    width: 40%;
+    font-size: 18px;
+    margin: 0 10px;
+    border-radius: 5px;
+  }
+  
+  .serviceDiv a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+  }
+  
+  .serviceDiv button:hover, a:hover {
+    opacity: 0.7;
+  }
+
+.image{
+    margin-top: 20px;
+    width: 150px;
+    border-radius: 50%;
+}
+
+.serviceDiv i{
+    color:#4CAF50;
+}
