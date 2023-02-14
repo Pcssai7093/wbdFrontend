@@ -155,29 +155,6 @@
   "wishlist": [
     {
       "userId": "10",
-      "serviceId": 19,
-      "sellerData": {
-        "fullname": "steve",
-        "email": "steven@gmail.com",
-        "password": "1234512345",
-        "confirm_password": "1234512345",
-        "id": 14
-      },
-      "id": 15
-    },
-    {
-      "userId": "10",
-      "serviceId": 17,
-      "sellerData": {
-        "fullname": "Sravanth",
-        "email": "sravanth143@gmail.com",
-        "password": "sravanth",
-        "id": 1
-      },
-      "id": 16
-    },
-    {
-      "userId": "10",
       "serviceId": 1,
       "sellerData": {
         "fullname": "Sravanth",
@@ -185,7 +162,7 @@
         "password": "sravanth",
         "id": 1
       },
-      "id": 17
+      "id": 1
     }
   ],
   "admin": [

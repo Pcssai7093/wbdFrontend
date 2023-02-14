@@ -6,10 +6,13 @@ const userConstructor = module.require("./Schemas/users");
 const adminConstructor = module.require("./Schemas/admins");
 const serviceConstructor = module.require("./Schemas/services");
 const bcrypt = require("bcrypt");
+const { Category } = require("@mui/icons-material");
 const app = express();
+const cors = require("cors");
+app.use(cors({ origin: true }));
 app.use(express.json());
-dotenv.config();
-
+dotenv.config("./.env");
+mongoose.set("strictQuery", false);
 app.listen("5000", () => {
   console.log("mongoose server running at port 5000");
   mongoose
@@ -229,3 +232,82 @@ app.get("/users", (req, res) => {
       res.send(err);
     });
 });
+
+//* route for filter and pagination
+app.get(
+  "/services/:search/:sortCategory/:category/:price/:limit/:skip",
+  (req, res) => {
+    let searchString = req.params.search;
+    let sortCategory = req.params.sortCategory;
+    let category = req.params.category;
+    let price = req.params.price;
+    let limit = req.params.limit;
+    let skip = req.params.skip;
+    function sortComparater(sortCat) {
+      if (sortCat == "priceLTH") return { price: 1 };
+      else if ((sortCat = "priceHTL")) return { price: -1 };
+      else return {};
+    }
+
+    serviceConstructor
+      .find({
+        title: {
+          $regex: searchString == 0 ? /[a-zA-z]*/ : searchString,
+          $options: "i",
+        },
+        category: {
+          $regex: category == 0 ? /[a-zA-z]*/ : category,
+          $options: "i",
+        },
+        price: { $lte: price },
+      })
+      .populate("seller")
+      .sort(sortComparater(sortCategory))
+      .limit(limit)
+      .skip(skip)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+);
+
+//* route for find total services for a filter
+// * returns in the form {count:_COUNT_}
+app.get(
+  "/services/count/:search/:sortCategory/:category/:price",
+  (req, res) => {
+    let searchString = req.params.search;
+    let sortCategory = req.params.sortCategory;
+    let category = req.params.category;
+    let price = req.params.price;
+    // * regex can be used like this
+    function sortComparater(sortCat) {
+      if (sortCat == "priceLTH") return { price: 1 };
+      else if ((sortCat = "priceHTL")) return { price: -1 };
+      else return {};
+    }
+
+    serviceConstructor
+      .find({
+        title: {
+          $regex: searchString == 0 ? /[a-zA-z]*/ : searchString,
+          $options: "i",
+        },
+        category: {
+          $regex: category == 0 ? /[a-zA-z]*/ : category,
+          $options: "i",
+        },
+        price: { $lte: price },
+      })
+      .sort(sortComparater(sortCategory))
+      .then((result) => {
+        res.send({ count: result.length });
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+);

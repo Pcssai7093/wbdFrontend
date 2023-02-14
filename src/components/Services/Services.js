@@ -133,17 +133,17 @@ function Services({ data }) {
               <Link to={`profile/${data.id}`}>
                 <img className={styles.userImg} src={profpic1} alt="" />
               </Link>
-              <p className={styles.userName}>{data.user.fullname}</p>
+              <p className={styles.userName}>{data.seller.fullname}</p>
             </div>
 
             <p>
               <button
                 onClick={() => {
-                  history.push(`/service/${userId}/${data.id}`);
+                  history.push(`/service/${userId}/${data._id}`);
                 }}
               >
                 <Link
-                  to={`/service/${userId}/${data.id}`}
+                  to={`/service/${userId}/${data._id}`}
                   style={{
                     textDecoration: "none",
                     fontSize: "18px",
