@@ -22,7 +22,7 @@ function Description() {
   const auth = useSelector((state) => state.validauth1);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/services/" + id + "?_expand=user")
+      .get("http://localhost:5000/services/" + id)
       .then((response) => {
         console.log(response.data);
         setServiceData(response.data);
@@ -42,11 +42,15 @@ function Description() {
   }
 
   async function handleAddToWishlist(id) {
-    await axios
-      .post("http://localhost:4000/wishlist", { userId: uid, serviceId: id })
-      .then((res) => {
-        console.log(res.data);
-      });
+    // * json server add to wishlist
+    // await axios
+    //   .post("http://localhost:4000/wishlist", { userId: uid, serviceId: id })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
+
+    // * mongo add to wishlist
+    // await axios.post("http://localhost:5000/wishlist/add",{})
     history.push("/wishlist/" + uid);
   }
 
@@ -99,22 +103,20 @@ function Description() {
           </div>
         </div>
         <div className={styles.desc}>
-          <div className={styles.title}>I develop react websites</div>
+          <div className={styles.title}>{serviceData.title}</div>
           <div className={styles.seller}>
             <img src={sellerImg} alt="" className={styles.sellerImage} />
-            <div className={styles.sellerName}>chandra Sekhar Sai</div>
+            <div className={styles.sellerName}>
+              {serviceData.seller.fullname}
+            </div>
           </div>
           <div className={styles.price}>
             {" "}
-            <span style={{ color: "grey" }}>Starting from</span> 2399/-
+            <span style={{ color: "grey" }}>Starting from</span>{" "}
+            {serviceData.price}/-
           </div>
           <div className={styles.productDescription}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui itaque
-            consectetur debitis ea voluptas, iure odit laboriosam vero id optio
-            libero, nam totam voluptatum. Harum! Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Officiis mollitia ipsa nam eaque.
-            Minus laborum molestiae officiis quam placeat voluptas error.
-            Obcaecati amet provident dicta!
+            {serviceData.description}
           </div>
           <div className={styles.addToWishlist}>Add to Wishlist</div>
           <div className={styles.contact}>Contact</div>
