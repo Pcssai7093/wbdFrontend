@@ -77,7 +77,7 @@ function Search() {
   // }
 
   const [paginate, setPaginate] = useState({
-    limit: 10,
+    limit: 9,
     skip: 0,
     totalItems: 0,
     totalPages: 0,
@@ -87,7 +87,7 @@ function Search() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/services/count/${filter.search}/${filter.sort}/${filter.category}/${filter.price}`
+        `https://fsd-backend.glitch.me/services/count/${filter.search}/${filter.sort}/${filter.category}/${filter.price}`
       )
       .then((result) => {
         console.log("here");
@@ -95,7 +95,7 @@ function Search() {
         setPaginate({
           ...paginate,
           totalItems: result.data.count,
-          totalPages: Math.ceil(result.data.count / 10),
+          totalPages: Math.ceil(result.data.count / 9),
         });
 
         axios
@@ -130,12 +130,12 @@ function Search() {
           ...paginate,
           presentPage: 1,
           skip: 0,
-          limit: 10,
+          limit: 9,
           totalItems: result.data.length,
-          totalPages: Math.ceil(result.data.length / 10),
+          totalPages: Math.ceil(result.data.length / 9),
         });
         console.log(result.data);
-        setFilterData(result.data.slice(0, 10));
+        setFilterData(result.data.slice(0, 9));
       })
       .catch((err) => {
         console.log(err);
@@ -166,9 +166,9 @@ function Search() {
           ...paginate,
           presentPage: 1,
           skip: 0,
-          limit: 10,
+          limit: 9,
           totalItems: result.data.length,
-          totalPages: Math.ceil(result.data.length / 10),
+          totalPages: Math.ceil(result.data.length / 9),
         });
         console.log(result.data);
         setFilter({
@@ -178,7 +178,7 @@ function Search() {
           category: 0,
           price: 100000,
         });
-        setFilterData(result.data.slice(0, 10));
+        setFilterData(result.data.slice(0, 9));
       })
       .catch((err) => {
         console.log(err);
@@ -212,7 +212,7 @@ function Search() {
       .get(
         `http://localhost:5000/services/${filter.search}/${filter.sort}/${
           filter.category
-        }/${filter.price}/${paginate.limit}/${paginate.skip + 10}`
+        }/${filter.price}/${paginate.limit}/${paginate.skip + 9}`
       )
       .then((result) => {
         // setData(result.data);
@@ -221,7 +221,7 @@ function Search() {
         setPaginate({
           ...paginate,
           presentPage: paginate.presentPage + 1,
-          skip: paginate.skip + 10,
+          skip: paginate.skip + 9,
         });
       })
       .catch((err) => {
@@ -238,7 +238,7 @@ function Search() {
       .get(
         `http://localhost:5000/services/${filter.search}/${filter.sort}/${
           filter.category
-        }/${filter.price}/${paginate.limit}/${paginate.skip - 10}`
+        }/${filter.price}/${paginate.limit}/${paginate.skip - 9}`
       )
       .then((result) => {
         // setData(result.data);
@@ -247,7 +247,7 @@ function Search() {
         setPaginate({
           ...paginate,
           presentPage: paginate.presentPage - 1,
-          skip: paginate.skip - 10,
+          skip: paginate.skip - 9,
         });
       })
       .catch((err) => {
@@ -381,15 +381,34 @@ function Search() {
           </IconContext.Provider>
         </div>
         {<Services data={filterData} />}
-        {/* <div className={styles.paginationDiv}>
+
+        <div className={styles.paginationDiv} style={{ marginBottom: "10px" }}>
           <IconContext.Provider value={{ className: styles.paginationIcons }}>
-            <MdNavigateBefore className={styles.prev} />
-            <div className={styles.pageNum}>1</div>
+            {paginate.presentPage != 1 && (
+              <MdNavigateBefore
+                className={styles.prev}
+                onClick={() => {
+                  // console.log("filter next");
+                  updatedFilterPrev();
+                }}
+              />
+            )}
+            <div className={styles.pageNum}>{paginate.presentPage}</div>
             <CgFormatSlash />
-            <div className={styles.totPageNum}>4</div>
-            <MdNavigateNext className={styles.next} />
+            <div className={styles.totPageNum}>
+              {paginate && paginate.totalPages}
+            </div>
+            {paginate.presentPage != paginate.totalPages && (
+              <MdNavigateNext
+                className={styles.next}
+                onClick={() => {
+                  // console.log("filter next");
+                  updatedFilterNext();
+                }}
+              />
+            )}
           </IconContext.Provider>
-        </div> */}
+        </div>
       </div>
     </div>
   ) : (
