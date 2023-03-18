@@ -6,7 +6,7 @@ import card3 from "./card3.png";
 import card4 from "./card4.png";
 import card5 from "./card5.png";
 import card6 from "./card6.png";
-import banner1 from "./banner1.png";
+import banner1 from "./banner2.png";
 
 export default function SlideShow() {
   return (

@@ -1,18 +1,12 @@
 .mainDiv{
     display: flex;
     justify-content: center;
-    /* width:80vw; */
-    margin: 20px auto;
+    width:100vw;
+    margin: 50px auto;
+    /* height:100%; */
 }
 
-.gallery{
-    /* background-color:rgb(233, 233, 248); */
-    width:40vw;
-    margin: 0 20px;
-    padding: 20px;
-    border-radius: 5px;
-    /* border:1px solid red; */
-}
+
 
 .desc{
     /* background-color:rgb(233, 233, 248); */
@@ -21,6 +15,9 @@
     width:40vw;
     border-radius: 5px;
     /* border:1px solid red; */
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
 }
 
 .gallery{
@@ -28,6 +25,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
 }
 .mainImg{
     margin: 10px 0px;
@@ -68,6 +68,7 @@
 }
 
 .seller{
+    cursor: pointer;
     display: flex;
     flex-direction: row;
 }
@@ -97,34 +98,37 @@
 .addToWishlist{
     text-align: center;
     width:40%;
+    /* height:40px; */
+    /* vertical-align:middle; */
+    font-size: 18px;
     margin: 4px 0px;
     font-weight: 500;
     cursor: pointer;
-    /* margin: 4px 0px; */
-    background-color: black;
+    background-color: #F36BAB;
     color: white;
-    border: 3px solid black;
     border-radius: 5px;
+    /* padding:auto 100px; */
 }
 
 .addToWishlist:hover{
     color: white;
-    background-color: black;
+    background-color: #F36BAB;
 }
 
 .contact{
+    font-size: 18px;
     text-align: center;
     width:40%;
     cursor: pointer;
     /* color: white; */
     border-radius: 5px;
     font-weight: 500;
-    background-color: black;
+    background-color:#1877F2;
     color: white;
-    border: 3px solid black;
+    /* border: 3px solid black; */
 }
 
 .contact:hover{
     color: white;
-    background-color: black;
+    background-color: #1877F2;
 }

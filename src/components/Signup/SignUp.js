@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style1 from "./signupform.module.css";
 import Validation from "./Validation";
-
+import axios from "axios";
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
@@ -31,6 +31,7 @@ function SignUp() {
 
   const handlechange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
+    console.log(values);
   };
 
   const handleFormSubmit = (event) => {
@@ -47,15 +48,15 @@ function SignUp() {
     console.log(no_errors);
     if (no_errors === 0) {
       // console.log(Object.keys(errors).length);
-      console.log("no errors");
-      fetch("http://localhost:4000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      }).then(() => {
-        console.log("new blog added");
-      });
-      history.push("/signin");
+      console.log(values);
+      // fetch("http://localhost:4000/users", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(values),
+      // }).then(() => {
+      //   console.log("new blog added");
+      // });
+      // history.push("/signin");
     }
     // event.submit();
   };

@@ -1,60 +1,21 @@
-/* .searchBarDiv{
-    text-align: center;
-    margin: 20px 0px;
-}
-.searchBarDiv div{
-    text-align: center;
-}
-#searchBar{
-    font-size: larger;
-    border: 1px solid;
-    font-weight: 600;
-    background-color: white;   
-}
 
-.filter{
-    border: 1px solid;
-    margin-left: 10px;
-    font-size: larger;
-    font-weight: 600;
-    background-color: white;
-} 
-.clear{
-    border: 1px solid;
-    margin-left: 10px;
-    font-size: larger;
-    font-weight: 600;
-    background-color: white;
-    cursor: pointer;
-}
-
-#searchBar::placeholder { 
-    color: black;
-    opacity: 1; 
-  }
-  
-.searchBarDiv.false #searchBar,.searchBarDiv.false .filter, .searchBarDiv.false .clear{
-color: white;
-background-color: black;   
-}
-
-.searchBarDiv.false #searchBar::placeholder{
-    color: white;
-} */
 .searchBox{
   display: flex;
   justify-content: center;
 }
 .searchComp{
   /* ma */
+  margin-top: 30px;
    margin-bottom: 10px;
-   width:27vw;
+   width:24vw;
    display: flex;
    flex-direction: column;
    /* border: 1px solid red; */
    justify-content: center;
    align-items: center;
-   height:600px;
+   height:500px;
+   background-color: white;
+   border-radius: 20px;
 }
 
 .searchComp label{
@@ -76,7 +37,7 @@ background-color: black;
   
   .searchComp input[type=reset] {
     width: 40%;
-    background-color: #4CAF50;
+    background-color: #1877F2;
     color: white;
     padding: 5px 20px;
     margin: 8px 10px;
@@ -87,12 +48,12 @@ background-color: black;
   }
   
   .searchComp input[type=reset]:hover {
-    background-color: #45a049;
+    background-color: #1877F2;
   }
 
   .searchComp input[type=submit] {
     width: 40%;
-    background-color: #4CAF50;
+    background-color: #1877F2;
     color: white;
     padding: 5px 20px;
     margin: 8px 10px;
@@ -103,7 +64,7 @@ background-color: black;
   }
   
   .searchComp input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #1877F2;
   }
   
   /* .searchComp div {
@@ -141,7 +102,7 @@ background-color: black;
     height: 25px;
     width: 15px;
     border-radius: 10%;
-    background: #45a049;
+    background: #1877F2;
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -11px;

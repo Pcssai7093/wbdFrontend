@@ -12,3 +12,10 @@
   cursor: pointer;
 }
 
+.HomeWrapper{
+  background-color: #F4F7FF;
+}
+.DescWrapper{
+  background-color: #F4F7FF;
+  height: 100vh;
+}

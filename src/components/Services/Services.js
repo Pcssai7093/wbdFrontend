@@ -20,106 +20,26 @@ function Services({ data }) {
   const color = useContext(modeContext);
   const history = useHistory();
   const userId = useParams().uid;
-  async function handleAddToWishlist(id) {
-    let sellerDetails = await axios.get(
-      "http://localhost:4000/services/" + id + "?_expand=user"
-    );
-    // console.log(sellerDetails.data);
-    let sellerData = sellerDetails.data.user;
 
+  async function handleAddToWishlist(sid) {
+    let data = {
+      uid: userId,
+      sid: sid,
+    };
+    console.log(data);
+    // * json server add to wishlist
     await axios
-      .post("http://localhost:4000/wishlist", {
-        userId: userId,
-        serviceId: id,
-        sellerData: sellerData,
-      })
+      .post("https://fsd-backend.glitch.me/wishlist/add", data)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        history.push("/wishlist/" + userId);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    history.push("/wishlist/" + userId);
   }
 
   return (
-    // <div
-    //   className={`${styles.serviceDiv} ${color ? styles.true : styles.false} `}
-    // >
-    //   {data.map((data) => (
-    //     <div className={styles.service}>
-    //       <div className={styles.imageSection}>
-    //         <img className={styles.image} src={pic1} />
-    //       </div>
-    //       <div className={styles.description}>
-    //         <div className={styles.header}>
-    //           <div className={styles.title}>{data.title}</div>
-    //         </div>
-    //         <div className={styles.separator}></div>
-
-    //         <div className={styles.body}>
-    //           <div className={styles.subbody}>
-    //             <img src={pic1} alt="" srcset="" className={styles.userImage} />
-    //             <div className={styles.userName}>{data.user.userName}</div>
-    //           </div>
-    //         </div>
-
-    //         <div className={styles.separator}></div>
-    //         <div className={styles.price}>Starting from {data.price}\-</div>
-    //         {/* <div className={styles.separator}></div> */}
-    //         <div className={styles.footer}>
-    //           <div>
-    //             <Link to={`/service/${userId}/${data.id}`}> 🔎</Link>
-    //           </div>
-    //           <div>
-    //             <Link
-    //               onClick={() => {
-    //                 handleAddToWishlist(data.id);
-    //               }}
-    //             >
-    //               💜
-    //             </Link>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   ))}
-    // </div>
-
-    // <div className={styles.serviceDiv}>
-    //   {data.map((data) => (
-    //     <div className={styles.card}>
-    //       <img src={pic1} alt="John" className={styles.image} />
-    //       <h3>{data.title}</h3>
-    //       {/* <p className={styles.title}>CEO & Founder, Example</p> */}
-    //       <p>₹{data.price}</p>
-    //       <p>{data.user.fullname}</p>
-    //       <p>
-    //         <button
-    //           onClick={() => {
-    //             history.push(`/service/${userId}/${data.id}`);
-    //           }}
-    //         >
-    //           <Link
-    //             to={`/service/${userId}/${data.id}`}
-    //             style={{
-    //               textDecoration: "none",
-    //               fontSize: "18px",
-    //               color: "white",
-    //             }}
-    //           >
-    //             {" "}
-    //             <i class="fa fa-search" aria-hidden="true"></i>{" "}
-    //           </Link>
-    //         </button>
-    //         <button
-    //           onClick={() => {
-    //             handleAddToWishlist(data.id);
-    //           }}
-    //         >
-    //           <i class="fa fa-heart" aria-hidden="true"></i>
-    //         </button>
-    //       </p>
-    //     </div>
-    //   ))}
-    // </div>
     <div className={styles.serviceBox}>
       <div className={styles.serviceDiv}>
         {data.map((data) => (
@@ -138,6 +58,7 @@ function Services({ data }) {
 
             <p>
               <button
+                className={styles.goToServiceButton}
                 onClick={() => {
                   history.push(`/service/${userId}/${data._id}`);
                 }}
@@ -155,8 +76,9 @@ function Services({ data }) {
                 </Link>
               </button>
               <button
+                className={styles.wishlistButton}
                 onClick={() => {
-                  handleAddToWishlist(data.id);
+                  handleAddToWishlist(data._id);
                 }}
               >
                 <i class="fa fa-heart" aria-hidden="true"></i>

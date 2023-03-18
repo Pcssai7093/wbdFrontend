@@ -17,6 +17,7 @@ function LoginPage() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    // https://fsd-backend.glitch.me
     const res = await axios.get(
       `http://localhost:4000/users?email=${userEmail}&password=${userPassword}`
     );

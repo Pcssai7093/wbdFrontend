@@ -77,9 +77,9 @@ function App() {
               <ProfilePage />
             </Route>
             <Route exact path="/admin/:uid">
-              {/* <Admin /> */}
-              {/* <Sidebar />
-              <MainDash /> */}
+              <Admin />
+              <Sidebar />
+              <MainDash />
               <AdminHomePage />
             </Route>
             <Route exact path="/post/:uid">
@@ -93,23 +93,29 @@ function App() {
               <Navbar />
             </Route>
             <Route exact path="/wishlist/:uid">
-              <Navbar />
-              <Space />
-              <Wishlist />
+              <div className="DescWrapper">
+                <Navbar />
+                <Space />
+                <Wishlist />
+              </div>
             </Route>
             <Route exact path="/home/:uid">
-              <Navbar />
-              {/* <Space /> */}
-              <SlideShow />
-              {/* <Space /> */}
-              <Search />
-              {/* <Space /> */}
-              {/* <Footer /> */}
+              <div className="HomeWrapper">
+                <Navbar />
+                {/* <Space /> */}
+                <SlideShow />
+                {/* <Space /> */}
+                <Search />
+                {/* <Space /> */}
+                {/* <Footer /> */}
+              </div>
             </Route>
             <Route exact path="/service/:uid/:pid">
-              <Navbar />
-              <Description />
-              <Space />
+              <div className="DescWrapper">
+                <Navbar />
+                <Description />
+                {/* <Space /> */}
+              </div>
             </Route>
             {/* <Route exact path="/filters"></Route> */}
             <Route path="/:any"></Route>

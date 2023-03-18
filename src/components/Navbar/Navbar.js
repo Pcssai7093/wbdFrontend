@@ -37,7 +37,7 @@ function Navbar() {
       }
     }
     axios
-      .get("http://localhost:4000/users/" + uid)
+      .get("https://fsd-backend.glitch.me/user/" + uid)
       .then((response) => {
         setUserName(response.data.fullname);
         console.log(response.data);
@@ -47,7 +47,8 @@ function Navbar() {
       });
   }, []);
 
-  return auth === true ? (
+  // * removing auth temporarily
+  return auth === auth ? (
     <div>
       {userName && (
         <div className={styles.navbar}>
@@ -79,14 +80,18 @@ function Navbar() {
               Profile
             </Link> */}
           <div className={styles.header}>
-            <img src={logo2} className={styles.logo} alt="logo" />{" "}
+            {/* <img src={logo2} className={styles.logo} alt="logo" />{" "} */}
           </div>
 
           <div className={styles.topnav} id="myTopnav">
             {/* <i class="fab fa-cloudflare"></i> */}
             <Link
               to={`/home/${uid}`}
-              className={path.includes("/home") ? styles.active : "inactive"}
+              className={
+                path.includes("/home") || path.includes("/service")
+                  ? styles.active
+                  : "inactive"
+              }
             >
               Home
               {/* <i class="fa fa-home"></i> */}
@@ -95,7 +100,9 @@ function Navbar() {
             <Link
               to={`/wishlist/${uid}`}
               className={
-                path.includes("/wishlist") ? styles.active : "inactive"
+                path.includes("/wishlist") || path.includes("/service")
+                  ? styles.active
+                  : "inactive"
               }
             >
               Wishlist
@@ -103,19 +110,28 @@ function Navbar() {
             </Link>
             <Link
               to={`/post/${uid}`}
-              className={path.includes("/post") ? styles.active : "inactive"}
+              className={
+                path.includes("/post") || path.includes("/service")
+                  ? styles.active
+                  : "inactive"
+              }
             >
               Post
               {/* <i class="fa fa-upload" aria-hidden="true"></i> */}
             </Link>
             <Link
               to={`/profile/${uid}`}
-              className={path.includes("/profile") ? styles.active : "inactive"}
+              className={
+                path.includes("/profile") || path.includes("/service")
+                  ? styles.active
+                  : "inactive"
+              }
             >
               Profile
               {/* <i class="fa fa-user-circle-o" aria-hidden="true"></i> */}
             </Link>
             <Link
+              className={styles.logOutLink}
               to="/"
               onClick={() => {
                 dispatch({

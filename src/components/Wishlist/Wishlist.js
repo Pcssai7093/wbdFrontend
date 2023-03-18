@@ -23,153 +23,86 @@ function Wishlist() {
   const color = useContext(modeContext);
   const params = useParams();
   const uid = params.uid;
-  console.log("in ");
-  function handleDeleteFromWishlist(id) {
+  // console.log("in ");
+  function handleDeleteFromWishlist(sid) {
+    let data = { sid, uid };
     axios
-      .delete("http://localhost:4000/wishlist/" + id)
-      .then((res) => {
+      .post("https://fsd-backend.glitch.me/wishlist/delete", data)
+      .then((result) => {
         setRender(!render);
       })
       .catch((err) => {
         console.log(err);
       });
+    // axios
+    //   .delete("http://localhost:4000/wishlist/" + id)
+    //   .then((res) => {
+    //     setRender(!render);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   useEffect(() => {
     const id = 1;
     axios
-      .get("http://localhost:4000/wishlist?_expand=service&userId=" + uid)
+      .get("https://fsd-backend.glitch.me/wishlist/" + uid)
       .then((result) => {
-        console.log(result.data.length);
-        setData(result.data);
+        // console.log(result.data.wishlist);
+        setData((prev) => result.data.wishlist);
       })
       .catch((err) => {
-        console.log("error");
+        console.log(err);
       });
   }, [render]);
 
-  return (
-    // <div
-    //   className={`${styles.serviceDiv} ${color ? styles.true : styles.false}`}
-    // >
-    //   {data &&
-    //     data.map((data) => (
-    //       <Link>
-    //         <div className={styles.service}>
-    //           <div className={styles.imageSection}>
-    //             <img className={styles.image} src={pic1} />
-    //           </div>
-    //           <div className={styles.description}>
-    //             <div className={styles.header}>
-    //               <div className={styles.title}>{data.service.title}</div>
-    //             </div>
-    //             <div className={styles.separator}></div>
-
-    //             <div className={styles.body}>
-    //               <div className={styles.subbody}>
-    //                 <img
-    //                   src={pic1}
-    //                   alt=""
-    //                   srcset=""
-    //                   className={styles.userImage}
-    //                 />
-    //                 <div className={styles.userName}>{data.user.userName}</div>
-    //               </div>
-    //             </div>
-    //             <div className={styles.separator}></div>
-    //             <div className={styles.price}>
-    //               Starting from {data.service.price}\-
-    //             </div>
-    //             {/* <div className={styles.separator}></div> */}
-    //             <div className={styles.footer}>
-    //               <div>
-    //                 <Link to={`/service/${data.service.id}`}> 🔎</Link>
-    //               </div>
-    //               <div>
-    //                 <Link
-    //                   onClick={() => {
-    //                     handleDeleteFromWishlist(data.id);
-    //                   }}
-    //                 >
-    //                   ❌
-    //                 </Link>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </Link>
-    //     ))}
-    // </div>
-    auth === true ? (
+  return auth === auth ? (
+    <>
+      <h2>WishList</h2>
       <div className={styles.serviceDiv}>
-        {data.map((data) => (
-          // <div className={styles.card}>
-          //   <img src={pic1} alt="John" className={styles.image} />
-          //   <h3>{data.service.title}</h3>
-          //   {/* <p className={styles.title}>CEO & Founder, Example</p> */}
-          //   <p>{data.user.fullname}</p>
-          //   <p>
-          //     <button>
-          //       <Link
-          //         to={`/service/${uid}/${data.service.id}`}
-          //         style={{
-          //           textDecoration: "none",
-          //           fontSize: "18px",
-          //           color: "white",
-          //         }}
-          //       >
-          //         {" "}
-          //         <i class="fa fa-search" aria-hidden="true"></i>{" "}
-          //       </Link>
-          //     </button>
-          //     <button
-          //       onClick={() => {
-          //         handleDeleteFromWishlist(data.id);
-          //       }}
-          //     >
-          //       <i class="fa fa-trash" aria-hidden="true"></i>
-          //     </button>
-          //   </p>
-          // </div>
-          <div className={styles.card}>
-            <img src={arr[++itr % mod]} alt="John" className={styles.image} />
-            <h3 className={styles.title}>{data.service.title}</h3>
-            {/* <p className={styles.title}>CEO & Founder, Example</p> */}
-            <p className={styles.price}>₹{data.service.price}</p>
-            <div className={styles.userData}>
-              <Link to={`profile/${data.id}`}>
-                <img className={styles.userImg} src={profpic1} alt="" />
-              </Link>
-              <p className={styles.userName}>{data.sellerData.fullname}</p>
-            </div>
-            <p>
-              <button>
-                <Link
-                  to={`/service/${uid}/${data.service.id}`}
-                  style={{
-                    textDecoration: "none",
-                    fontSize: "18px",
-                    color: "white",
+        {data &&
+          data.map((data) => (
+            <div className={styles.card}>
+              <img src={arr[++itr % mod]} alt="John" className={styles.image} />
+              <h3 className={styles.title}>{data.title}</h3>
+              {/* <p className={styles.title}>CEO & Founder, Example</p> */}
+              <p className={styles.price}>₹{data.price}</p>
+              <div className={styles.userData}>
+                <Link to={`profile/${data.seller._id}`}>
+                  <img className={styles.userImg} src={profpic1} alt="" />
+                </Link>
+                <p className={styles.userName}>{data.seller.fullname}</p>
+              </div>
+              <p>
+                <button className={styles.goToServiceButton}>
+                  <Link
+                    to={`/service/${uid}/${data._id}`}
+                    style={{
+                      textDecoration: "none",
+                      fontSize: "18px",
+                      color: "white",
+                    }}
+                  >
+                    {" "}
+                    <i class="fa fa-search" aria-hidden="true"></i>{" "}
+                  </Link>
+                </button>
+                <button
+                  className={styles.wishlistButton}
+                  onClick={() => {
+                    handleDeleteFromWishlist(data._id);
                   }}
                 >
-                  {" "}
-                  <i class="fa fa-search" aria-hidden="true"></i>{" "}
-                </Link>
-              </button>
-              <button
-                onClick={() => {
-                  handleDeleteFromWishlist(data.id);
-                }}
-              >
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </button>
-            </p>
-          </div>
-        ))}
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </p>
+            </div>
+          ))}
       </div>
-    ) : (
-      <h2>404 Error Not Found</h2>
-    )
+    </>
+  ) : (
+    <h2>404 Error Not Found</h2>
   );
 }
 

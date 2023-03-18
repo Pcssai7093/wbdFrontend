@@ -87,7 +87,7 @@ function Search() {
   useEffect(() => {
     axios
       .get(
-        `https://fsd-backend.glitch.me/services/count/${filter.search}/${filter.sort}/${filter.category}/${filter.price}`
+        `https://fsd-backend.glitch.me/service/count/${filter.search}/${filter.sort}/${filter.category}/${filter.price}`
       )
       .then((result) => {
         console.log("here");
@@ -100,7 +100,7 @@ function Search() {
 
         axios
           .get(
-            `http://localhost:5000/services/${filter.search}/${filter.sort}/${filter.category}/${filter.price}/${paginate.limit}/${paginate.skip}`
+            `https://fsd-backend.glitch.me/service/${filter.search}/${filter.sort}/${filter.category}/${filter.price}/${paginate.limit}/${paginate.skip}`
           )
           .then((result) => {
             // setData(result.data);
@@ -122,7 +122,7 @@ function Search() {
     console.log("update filter");
     axios
       .get(
-        `http://localhost:5000/services/${filter.search}/${filter.sort}/${filter.category}/${filter.price}/10000/0`
+        `https://fsd-backend.glitch.me/service/${filter.search}/${filter.sort}/${filter.category}/${filter.price}/10000/0`
       )
       .then((result) => {
         // setData(result.data);
@@ -159,7 +159,7 @@ function Search() {
     //     console.log(err);
     //   });
     axios
-      .get(`http://localhost:5000/services/0/0/0/1000000/100000/0`)
+      .get(`https://fsd-backend.glitch.me/service/0/0/0/1000000/100000/0`)
       .then((result) => {
         // setData(result.data);
         setPaginate({
@@ -210,9 +210,11 @@ function Search() {
     //* on submit read all the filter options retrive the data and set the initial paginate values
     axios
       .get(
-        `http://localhost:5000/services/${filter.search}/${filter.sort}/${
-          filter.category
-        }/${filter.price}/${paginate.limit}/${paginate.skip + 9}`
+        `https://fsd-backend.glitch.me/service/${filter.search}/${
+          filter.sort
+        }/${filter.category}/${filter.price}/${paginate.limit}/${
+          paginate.skip + 9
+        }`
       )
       .then((result) => {
         // setData(result.data);
@@ -236,9 +238,11 @@ function Search() {
     //* on submit read all the filter options retrive the data and set the initial paginate values
     axios
       .get(
-        `http://localhost:5000/services/${filter.search}/${filter.sort}/${
-          filter.category
-        }/${filter.price}/${paginate.limit}/${paginate.skip - 9}`
+        `https://fsd-backend.glitch.me/service/${filter.search}/${
+          filter.sort
+        }/${filter.category}/${filter.price}/${paginate.limit}/${
+          paginate.skip - 9
+        }`
       )
       .then((result) => {
         // setData(result.data);
@@ -255,7 +259,9 @@ function Search() {
       });
   }
 
-  return auth === true ? (
+  // * auth check (removing temporarily)
+  // return auth === true ? (
+  return auth === auth ? (
     <div className={styles.searchBox}>
       <div className={styles.searchComp}>
         <form

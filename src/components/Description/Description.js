@@ -22,7 +22,7 @@ function Description() {
   const auth = useSelector((state) => state.validauth1);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/services/" + id)
+      .get("https://fsd-backend.glitch.me/service/" + id)
       .then((response) => {
         console.log(response.data);
         setServiceData(response.data);
@@ -35,23 +35,53 @@ function Description() {
   }, []);
 
   async function func() {
-    const res = await axios.get("http://localhost:4000/users/" + uid);
+    const res = await axios.get("https://fsd-backend.glitch.me/user/" + uid);
     console.log("lalith");
     console.log(res.data);
     setuserdata(res.data);
   }
 
-  async function handleAddToWishlist(id) {
+  async function handleAddToWishlist(sid) {
+    let data = {
+      uid: uid,
+      sid: sid,
+    };
+    console.log(data);
     // * json server add to wishlist
-    // await axios
-    //   .post("http://localhost:4000/wishlist", { userId: uid, serviceId: id })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
+    await axios
+      .post("https://fsd-backend.glitch.me/wishlist/add", data)
+      .then((res) => {
+        // console.log(res.data);
+        history.push("/wishlist/" + uid);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // history.push("/wishlist/" + uid);
 
     // * mongo add to wishlist
     // await axios.post("http://localhost:5000/wishlist/add",{})
-    history.push("/wishlist/" + uid);
+  }
+
+  async function handleChatClick(userId, sellerId) {
+    let data = {
+      user1: userId,
+      user2: sellerId,
+    };
+    console.log(data);
+    if (userId === sellerId) {
+      alert("Oops You are the Seller?");
+    } else {
+      await axios
+        .post("https://fsd-backend.glitch.me/chat/conversation/add", data)
+        .then((result) => {
+          console.log(result.data);
+          history.push("/chat/" + userId);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   useEffect(() => {}, []);
@@ -62,7 +92,7 @@ function Description() {
   function selectImage(image) {
     setMainImage(image);
   }
-  return auth === true ? (
+  return auth === auth ? (
     serviceData && (
       <div className={styles.mainDiv}>
         <div className={styles.gallery}>
@@ -118,8 +148,22 @@ function Description() {
           <div className={styles.productDescription}>
             {serviceData.description}
           </div>
-          <div className={styles.addToWishlist}>Add to Wishlist</div>
-          <div className={styles.contact}>Contact</div>
+          <div
+            onClick={() => {
+              handleAddToWishlist(serviceData._id);
+            }}
+            className={styles.addToWishlist}
+          >
+            Add to Wishlist
+          </div>
+          <div
+            onClick={() => {
+              handleChatClick(uid, serviceData.seller._id);
+            }}
+            className={styles.contact}
+          >
+            Chat
+          </div>
         </div>
       </div>
     )
