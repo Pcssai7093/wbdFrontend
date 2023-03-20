@@ -22,8 +22,8 @@
 }
 
 .card {
-    padding: 3px;
-    box-shadow: 0 2px 6px 0px rgba(0, 0, 0,0.2);
+    padding: 10px;
+    box-shadow: 0 2px 6px 5px #F4F7FF;
     width: 250px;
     margin: auto;
     text-align: center;

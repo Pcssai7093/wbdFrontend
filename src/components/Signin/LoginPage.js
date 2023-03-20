@@ -17,21 +17,31 @@ function LoginPage() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // https://fsd-backend.glitch.me
-    const res = await axios.get(
-      `http://localhost:4000/users?email=${userEmail}&password=${userPassword}`
-    );
-    if (res.data.length > 0) {
-      dispatch({
-        type: "setTrue1",
+    axios
+      .post("https://fsd-backend.glitch.me/user/chandra/signin", {
+        userEmail: userEmail,
+        userPassword: userPassword,
+      })
+      .then((res) => {
+        console.log("then");
+        console.log(res.data);
+        history.push("/home/" + res.data.result[0]._id);
+      })
+      .catch((err) => {
+        console.log("catch");
+        console.log(err);
       });
-      // setdata("user")
-      console.log("hello bargav");
-      localStorage.setItem("author", JSON.stringify(data));
-      history.push("/home/" + res.data[0].id);
-    } else {
-      alert("User does not exist. Please Register");
-    }
+    // if (res.data.length > 0) {
+    //   dispatch({
+    //     type: "setTrue1",
+    //   });
+    //   // setdata("user")
+    //   console.log("hello bargav");
+    //   localStorage.setItem("author", JSON.stringify(data));
+    //   history.push("/home/" + res.data[0].id);
+    // } else {
+    //   alert("User does not exist. Please Register");
+    // }
   };
 
   return (

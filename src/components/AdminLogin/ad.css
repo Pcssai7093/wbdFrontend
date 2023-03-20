@@ -48,7 +48,7 @@
     border-radius: 4px;
   }
   
-  .inptag[type="text"],
+  .inptag[type="password"],
   .inptag[type="email"] {
     width: 100%;
     padding: 0 0 0 10px;

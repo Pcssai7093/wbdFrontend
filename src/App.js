@@ -27,6 +27,8 @@ import MainDash from "./components/AdminPage/MainDash/MainDash";
 import AdminHomePage from "./components/AdminPage/index";
 import ProfilePage from "./components/Profile";
 import SlideShow from "./components/SlideShow/SlideShow";
+import Messenger from "./components/Chat/messenger/Messenger";
+import Home from "./components/Myadmin/Home/Home";
 
 function App() {
   const [color, setColor] = useState(true);
@@ -117,17 +119,23 @@ function App() {
                 {/* <Space /> */}
               </div>
             </Route>
+
+            <Route exact path="/chat/:uid/">
+              <div className="HomeWrapper">
+                <Navbar />
+                <Messenger />
+              </div>
+            </Route>
+            <Route exact path="/myadmin">
+              <div className="HomeWrapper">
+                <Home />
+              </div>
+            </Route>
             {/* <Route exact path="/filters"></Route> */}
             <Route path="/:any"></Route>
           </modeContext.Provider>
         </Switch>
-        {/* <button className="mode" onClick={handleMode}>
-          {color ? (
-            <p style={{ fontSize: "20px" }}>🌙</p>
-          ) : (
-            <p style={{ fontSize: "20px" }}>🌞</p>
-          )}
-        </button> */}
+    
       </div>
     </BrowserRouter>
   );

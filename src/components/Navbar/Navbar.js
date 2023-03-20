@@ -98,6 +98,18 @@ function Navbar() {
               {/* <i class="fa fa-heart" aria-hidden="true"></i> */}
             </Link>
             <Link
+              to={`/chat/${uid}`}
+              className={
+                path.includes("/chat") || path.includes("/service")
+                  ? styles.active
+                  : "inactive"
+              }
+            >
+              Chat
+              {/* <i class="fa fa-home"></i> */}
+              {/* <i class="fa fa-heart" aria-hidden="true"></i> */}
+            </Link>
+            <Link
               to={`/wishlist/${uid}`}
               className={
                 path.includes("/wishlist") || path.includes("/service")
