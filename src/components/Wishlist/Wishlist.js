@@ -1,4 +1,5 @@
-import styles from "../Services/Services.module.css";
+// import styles from "../Services/Services.module.css";
+import styles from "./Wishlist.module.css";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -9,18 +10,19 @@ import pic2 from "./s2.png";
 import pic3 from "./s3.png";
 import pic4 from "./s4.png";
 import pic5 from "./s5.png";
-import modeContext from "../modeContext";
-import { useSelector } from "react-redux";
+import loginContext from "../../index";
+import Cookies from "universal-cookie";
 
 function Wishlist() {
+  const loginStatusObj = useContext(loginContext);
+  const cookies = new Cookies();
+
   const mod = 6;
   const arr = [pic0, pic1, pic2, pic3, pic4, pic5];
   let itr = -1;
   const [data, setData] = useState([]);
-  const auth = useSelector((state) => state.validauth1);
   const history = useHistory();
   const [render, setRender] = useState(true);
-  const color = useContext(modeContext);
   const params = useParams();
   const uid = params.uid;
   // console.log("in ");
@@ -57,9 +59,9 @@ function Wishlist() {
       });
   }, [render]);
 
-  return auth === auth ? (
-    <>
-      <h2>WishList</h2>
+  return loginStatusObj.isLogin ? (
+    <div className={styles.wishlistWrapper}>
+      {/* <h2>WishList</h2> */}
       <div className={styles.serviceDiv}>
         {data &&
           data.map((data) => (
@@ -100,9 +102,9 @@ function Wishlist() {
             </div>
           ))}
       </div>
-    </>
+    </div>
   ) : (
-    <h2>404 Error Not Found</h2>
+    "please Login"
   );
 }
 

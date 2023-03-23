@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import style2 from "./LoginPage.module.css";
 import profile from "./profile2.webp";
@@ -6,42 +6,55 @@ import email from "./email.jpg";
 import pass from "./pass.png";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
+import loginContext from "../../index";
 
 function LoginPage() {
+  const loginStatusObj = useContext(loginContext);
   const history = useHistory();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [data, setdata] = useState("user");
-  const dispatch = useDispatch();
+  const cookies = new Cookies();
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    // axios
+    //   .get("https://fsd-backend.glitch.me/user/temp", {
+    //     headers: { authorization: cookies.get("jwtToken") },
+    //   })
+    //   .then((result) => {
+    //     console.log(result.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     axios
       .post("https://fsd-backend.glitch.me/user/chandra/signin", {
         userEmail: userEmail,
         userPassword: userPassword,
       })
       .then((res) => {
-        console.log("then");
-        console.log(res.data);
-        history.push("/home/" + res.data.result[0]._id);
+        let responseData = res.data;
+        console.log(responseData);
+        if (responseData.errors.length > 0) {
+          alert(responseData.errors[0]);
+        } else {
+          // console.log(cookies);
+          let jwtToken = responseData.jwtToken;
+          let d = new Date();
+          d.setTime(d.getTime() + 180 * 60 * 1000);
+          cookies.set("jwtToken", jwtToken, { expires: d });
+          let userData = responseData.result;
+          console.log(userData);
+          // loginStatusObj.isLogin = true;
+          history.push("/home/" + userData[0]._id);
+        }
       })
       .catch((err) => {
         console.log("catch");
         console.log(err);
       });
-    // if (res.data.length > 0) {
-    //   dispatch({
-    //     type: "setTrue1",
-    //   });
-    //   // setdata("user")
-    //   console.log("hello bargav");
-    //   localStorage.setItem("author", JSON.stringify(data));
-    //   history.push("/home/" + res.data[0].id);
-    // } else {
-    //   alert("User does not exist. Please Register");
-    // }
   };
 
   return (

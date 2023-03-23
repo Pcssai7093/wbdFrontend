@@ -9,7 +9,6 @@ import profpic1 from "./p1.png";
 
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import modeContext from "../modeContext";
 import axios from "axios";
 import { setRef } from "@mui/material";
 
@@ -17,7 +16,6 @@ function Services({ data }) {
   const mod = 6;
   const arr = [pic0, pic1, pic2, pic3, pic4, pic5];
   let itr = -1;
-  const color = useContext(modeContext);
   const history = useHistory();
   const userId = useParams().uid;
 

@@ -1,40 +1,21 @@
 import styles from "./Search.module.css";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import modeContext from "../modeContext";
 import Services from "../Services/Services";
-import { useSelector } from "react-redux";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { CgFormatSlash } from "react-icons/cg";
 import { IconContext } from "react-icons";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { log } from "util";
+import loginContext from "../../index";
+
 // * implement service fetching here and next service display component inside this so that
 // * data can be easily filtered
 function Search() {
+  const loginStatus = useContext(loginContext);
+
   const [data, setData] = useState([]);
-  const auth = useSelector((state) => {
-    // console.log(state);
-    return state.validauth1;
-  });
 
-  // console.log("hello");
-  // console.log(auth);
   const [filterData, setFilterData] = useState([]);
-  // const [filterType, setFilterType] = useState("");
-  // const [searchText, setSearchText] = useState("");
-
-  // function filterhelper(ftype) {
-  //   let temp = [];
-  //   if (ftype == 1) {
-  //     temp = [...data];
-  //     temp.sort((d1, d2) => d1.price - d2.price);
-  //   } else if (ftype == 2) {
-  //     temp = [...data];
-  //     temp.sort((d1, d2) => d2.price - d1.price);
-  //   }
-  //   return temp;
-  // }
 
   const [filter, setFilter] = useState({
     search: 0,
@@ -42,39 +23,6 @@ function Search() {
     category: 0,
     price: 100000,
   });
-
-  const color = useContext(modeContext);
-
-  // function filterChangeHandle(searchT, filterType) {
-  //   if (searchT == "clear") {
-  //     setFilterData(data);
-  //     return;
-  //   }
-
-  //   if (filterType && searchT == "") {
-  //     let temp = filterhelper(filterType);
-  //     setFilterData(temp);
-  //     return;
-  //   }
-
-  //   if (filterType && searchT) {
-  //     let temp = filterhelper(filterType);
-  //     temp = temp.filter((d) => {
-  //       return d.title.includes(searchT) == true;
-  //     });
-  //     setFilterData(temp);
-  //     return;
-  //   }
-
-  //   if (searchT != "") {
-  //     let temp = data.filter((d) => {
-  //       return d.title.includes(searchT) == true;
-  //     });
-  //     setFilterData(temp);
-  //   } else {
-  //     setFilterData(data);
-  //   }
-  // }
 
   const [paginate, setPaginate] = useState({
     limit: 9,
@@ -90,8 +38,8 @@ function Search() {
         `https://fsd-backend.glitch.me/service/count/${filter.search}/${filter.sort}/${filter.category}/${filter.price}`
       )
       .then((result) => {
-        console.log("here");
-        console.log(result.data);
+        // console.log("here");
+        // console.log(result.data);
         setPaginate({
           ...paginate,
           totalItems: result.data.count,
@@ -104,7 +52,7 @@ function Search() {
           )
           .then((result) => {
             // setData(result.data);
-            console.log(result.data);
+            // console.log(result.data);
             setFilterData(result.data);
           })
           .catch((err) => {
@@ -134,7 +82,7 @@ function Search() {
           totalItems: result.data.length,
           totalPages: Math.ceil(result.data.length / 9),
         });
-        console.log(result.data);
+        // console.log(result.data);
         setFilterData(result.data.slice(0, 9));
       })
       .catch((err) => {
@@ -170,7 +118,7 @@ function Search() {
           totalItems: result.data.length,
           totalPages: Math.ceil(result.data.length / 9),
         });
-        console.log(result.data);
+        // console.log(result.data);
         setFilter({
           ...filter,
           search: 0,
@@ -218,7 +166,7 @@ function Search() {
       )
       .then((result) => {
         // setData(result.data);
-        console.log(result.data);
+        // console.log(result.data);
         setFilterData(result.data);
         setPaginate({
           ...paginate,
@@ -233,7 +181,7 @@ function Search() {
 
   function updatedFilterPrev() {
     //* on submit read all the filter options retrive the data and set the initial paginate values
-    console.log("update prev");
+    // console.log("update prev");
     // console.log(paginate);
     //* on submit read all the filter options retrive the data and set the initial paginate values
     axios
@@ -261,7 +209,7 @@ function Search() {
 
   // * auth check (removing temporarily)
   // return auth === true ? (
-  return auth === auth ? (
+  return loginStatus.isLogin ? (
     <div className={styles.searchBox}>
       <div className={styles.searchComp}>
         <form
@@ -418,7 +366,7 @@ function Search() {
       </div>
     </div>
   ) : (
-    <h2>404 Error Found</h2>
+    "please Login"
   );
 }
 

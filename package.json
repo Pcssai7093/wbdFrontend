@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@iconscout/react-unicons": "^1.1.6",
@@ -28,6 +29,7 @@
     "socket.io-client": "^4.6.1",
     "timeago.js": "^4.0.2",
     "uniqid": "^5.4.0",
+    "universal-cookie": "^4.0.4",
     "util": "^0.12.5",
     "validator": "^13.7.0",
     "webpack": "^5.75.0"

@@ -1,54 +1,53 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useContext, useEffect, useState } from "react";
-import modeContext from "../modeContext";
 import uniqid from "uniqid";
 import { style } from "@mui/system";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import logo2 from "./logo3.png";
+import loginContext from "../../index";
+import Cookies from "universal-cookie";
 
 function Navbar() {
-  const color = useContext(modeContext);
-  const auth = useSelector((state) => state.validauth1);
+  // axios.defaults.withCredentials = true;
+  const loginStatusObj = useContext(loginContext);
   const path = useLocation().pathname;
   const params = useParams();
   const uid = params.uid;
-  const dispatch = useDispatch();
+  const cookies = new Cookies();
+
   // const uid = 1;
   const [userName, setUserName] = useState();
-
+  const [unseen, setUnseen] = useState(0);
   useEffect(() => {
-    console.log("bargav");
-    const obj = localStorage.getItem("author");
-    if (obj) {
-      console.log("if");
-      console.log(obj);
-      if (obj === '"user"') {
-        console.log("hello in if");
-        dispatch({
-          type: "setTrue1",
-        });
-      } else {
-        dispatch({
-          type: "setFalse1",
-        });
-      }
-    }
     axios
-      .get("https://fsd-backend.glitch.me/user/" + uid)
+      .get("https://fsd-backend.glitch.me/user/" + uid, {
+        headers: { authorization: cookies.get("jwtToken") },
+      })
       .then((response) => {
-        setUserName(response.data.fullname);
-        console.log(response.data);
+        // console.log(response.data);
+        if (response.data == "auth failed") {
+          loginStatusObj.isLogin = false;
+        } else setUserName(response.data.fullname);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    axios
+      .get("https://fsd-backend.glitch.me/chat/countUnseen/" + uid)
+      .then((response) => {
+        setUnseen((prev) => {
+          return response.data.count;
+        });
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
   }, []);
 
   // * removing auth temporarily
-  return auth === auth ? (
+  return (
     <div>
       {userName && (
         <div className={styles.navbar}>
@@ -106,6 +105,18 @@ function Navbar() {
               }
             >
               Chat
+              <sup
+                style={{
+                  backgroundColor: unseen !== 0 ? "white" : "",
+                  color: "black",
+                  width: "40px",
+                  borderRadius: "20px",
+                  fontSize: "15px",
+                  padding: "5px 10px",
+                }}
+              >
+                {unseen !== 0 ? unseen : ""}
+              </sup>
               {/* <i class="fa fa-home"></i> */}
               {/* <i class="fa fa-heart" aria-hidden="true"></i> */}
             </Link>
@@ -159,8 +170,6 @@ function Navbar() {
         </div>
       )}
     </div>
-  ) : (
-    <h2></h2>
   );
 }
 export default Navbar;

@@ -14,6 +14,7 @@
 
 .HomeWrapper{
   background-color: #F4F7FF;
+  min-height:100vh;
 }
 .DescWrapper{
   background-color: #F4F7FF;

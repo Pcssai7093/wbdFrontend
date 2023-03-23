@@ -3,13 +3,18 @@ import Message from "../message/Message";
 // import "./messenger.css";
 import styles from "./messenger.module.css";
 import { useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { format } from "timeago.js";
+import loginContext from "../../../index";
+import Cookies from "universal-cookie";
 
 export default function Messenger() {
   // * my code
+  const loginStatusObj = useContext(loginContext);
+  const cookies = new Cookies();
+
   const currentUserId = useParams().uid;
   // console.log(currentUserId);
 
@@ -58,11 +63,17 @@ export default function Messenger() {
         if (result.data.length > 0) {
           let users = result.data[0].users;
           let otherUser = users[0] !== currentUserId ? users[0] : users[1];
+          // let currUser = users[0] !== currentUserId ? users[0] : users[1];
           // console.log("otherUser: " + otherUser);
           // setCurrentConversationUser(otherUser);
           // setMessages(result.data[0].messages);
-          console.log(result.data[0].messages);
           set(otherUser, result.data[0].messages);
+          axios.get(
+            "https://fsd-backend.glitch.me/chat/updateSeen/" +
+              otherUser +
+              "/" +
+              currentUserId
+          );
         }
       })
       .catch((err) => {
@@ -178,7 +189,7 @@ export default function Messenger() {
     }, 300);
   }
 
-  return (
+  return loginStatusObj.isLogin ? (
     <>
       {/* <Topbar /> */}
       <div className={styles.messenger}>
@@ -261,5 +272,7 @@ export default function Messenger() {
         </div>
       </div>
     </>
+  ) : (
+    "please login"
   );
 }

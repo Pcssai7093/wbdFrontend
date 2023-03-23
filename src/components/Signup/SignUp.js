@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import style1 from "./signupform.module.css";
 import Validation from "./Validation";
+import emailjs from "@emailjs/browser";
+
+import { useRef } from "react";
 
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
@@ -14,6 +17,8 @@ function SignUp() {
   const [type, setType] = useState("password");
   const [type2, setType2] = useState("password");
   const history = useHistory();
+
+  const form = useRef();
 
   const [values, setValues] = useState({
     username: "",
@@ -38,32 +43,31 @@ function SignUp() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     let temp = Validation(values);
+    console.log(values);
     console.log(temp);
     setErrors(Validation(values));
 
-    // console.log(errors);
-    // console.log(Object.values(errors).length);
-    // let no_errors=Object.keys(errors).length
     let no_errors = Object.values(errors).length;
-
-    console.log(no_errors);
+    // console.log(errors);
+    // console.log(no_errors);
     if (no_errors === 0) {
-      // console.log(Object.keys(errors).length);
-      console.log("no errors");
-      fetch("https://fsd-backend.glitch.me/user/chandra/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      })
-        .then((res) => {
-          console.log(res);
-          console.log("new blog added");
-        })
-        .catch((err) => {
-          console.log("not added");
-          console.log(err);
-        });
-      history.push("/signin");
+      //   // console.log(Object.keys(errors).length);
+      //   console.log("no errors");
+      //   fetch("https://fsd-backend.glitch.me/user/chandra/signup", {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify(values),
+      //   })
+      // .then((res) => {
+      //   console.log(res);
+      //   console.log("new blog added");
+
+      history.push({ pathname: "/otp", state: values });
+      // })
+      // .catch((err) => {
+      //   console.log("not added");
+      //   console.log(err);
+      // });
     }
     // event.submit();
   };
@@ -95,7 +99,7 @@ function SignUp() {
           <h2 className={style1.title}> Create Account</h2>
         </div>
 
-        <form className={style1.form_wrapper}>
+        <form ref={form} className={style1.form_wrapper}>
           <div className={style1.username}>
             <label className={style1.label}> Username</label>
             <input
