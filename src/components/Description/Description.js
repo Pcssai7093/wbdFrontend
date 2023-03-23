@@ -137,7 +137,12 @@ function Description() {
           </div>
           <div className={styles.desc}>
             <div className={styles.title}>{serviceData.title}</div>
-            <div className={styles.seller}>
+            <div
+              className={styles.seller}
+              onClick={() => {
+                history.push(`/profile/${uid}/${serviceData.seller._id}`);
+              }}
+            >
               <img src={sellerImg} alt="" className={styles.sellerImage} />
               <div className={styles.sellerName}>
                 {serviceData.seller.fullname}

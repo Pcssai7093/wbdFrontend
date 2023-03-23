@@ -1,124 +1,263 @@
 import React, { useEffect, useRef, useState } from "react";
-import style1 from "./profile.module.css";
-import { useHistory, useParams } from "react-router-dom";
+import styles from "./profile.module.css";
+import { useHistory, useParams, Link } from "react-router-dom";
 import axios from "axios";
+import pic0 from "./s0.png";
 
 function Profile() {
   const history = useHistory();
   const params = useParams();
   const [usr, setusr] = useState([]);
-  const id = params.uid;
-  useEffect(() => {
-    fuck();
-  }, []);
-  async function fuck() {
-    const r = await axios.get(`http://localhost:4000/users/${id}`);
-    console.log(r.data.fullname);
-    setusr(r.data);
+  const [editable, setEditable] = useState(false);
+  const uid = params.uid;
+  const profilerId = params.profilerId;
+  const [userData, setUserData] = useState();
+  const [updateData, setUpdateData] = useState({});
+  const [userSkills, setUserSkills] = useState([]);
+  const [inputSkill, setInputSkill] = useState("");
+  function handleEdit() {
+    console.log("handle edit");
+    setEditable((prev) => true);
   }
 
-  const handlechange = (event) => {
-    setusr({ ...usr, [event.target.name]: event.target.value });
-  };
+  async function handleUpdate() {
+    console.log("handle update");
+    updateData.skills = [...userSkills];
+    console.log(updateData);
+    await axios
+      .post(
+        "https://fsd-backend.glitch.me/user/profile/update/" + uid,
+        updateData
+      )
+      .then((response) => {
+        if (response.data == true) {
+          alert("user data updated");
+        } else {
+          alert("Retry");
+        }
+      });
+    // console.log(updateData);
+    setEditable((prev) => false);
+  }
 
-  async function subhandler(event) {
-    event.preventDefault();
-    const res = await axios
-      .put(`http://localhost:4000/users/${id}/`, {
-        fullname: usr.fullname,
-        email: usr.email,
-        password: usr.password,
-      })
-      .then((resp) => {
-        history.push("/home/" + id);
-        console.log("Ok");
+  function handleSkillAdd(val) {
+    setUserSkills((prev) => {
+      if (!prev.includes(val)) {
+        return [...prev, val];
+      } else return prev;
+    });
+    console.log("handle skill add");
+  }
+
+  function handleSkillDelete(val) {
+    console.log("handle delete");
+    let skillsObj = userSkills;
+    let elemIndex = skillsObj.indexOf(val);
+    // console.log(val, elemIndex);
+    if (elemIndex > -1) {
+      // console.log("deleted");
+      skillsObj.splice(elemIndex, 1);
+      setUserSkills((prev) => [...skillsObj]);
+      // console.log(skillsObj);
+    }
+  }
+
+  useEffect(() => {
+    axios
+      .get("https://fsd-backend.glitch.me/user/profile/" + profilerId)
+      .then((result) => {
+        console.log("user data fetched");
+        let data = result.data;
+        updateData.fullname = data.fullname;
+        updateData.skills = data.skills;
+        updateData.about = data.about;
+        setUserData(data);
+        setUserSkills(data.skills);
       })
       .catch((err) => {
-        console.log("Error");
+        console.log(err);
       });
-  }
+  }, []);
   return (
-    <div className={style1.container}>
-      <div className={style1.app_wrap}>
-        {/* <div>
-              <h2 className={style1.title}> Create Account</h2>
-            </div>
-     */}
-        <form className={style1.form_wrapper} onSubmit={subhandler}>
-          <div className={style1.name}>
-            <label className={style1.label}>Edit Name</label>
+    userData && (
+      <div className={styles.profilePageDiv}>
+        <form
+          className={`${styles.searchComp} ${
+            editable === false ? styles.disabled : ""
+          }`}
+        >
+          <div className={styles.row}>
+            <label className={styles.label1}>Full Name:</label>
             <input
-              className={style1.input}
+              className={styles.input1}
               type="text"
               name="fullname"
-              value={usr.fullname}
-              onChange={handlechange}
-              //   value={values.fullname}
-              //   onChange={handlechange}
+              // value={userData?.fullname}
+              defaultValue={userData.fullname}
+              onChange={(e) => {
+                setUpdateData((prev) => {
+                  prev.fullname = e.target.value;
+                  // console.log(prev);
+                  return { ...prev };
+                });
+              }}
             ></input>
-            {/* {errors.fullname && (
-                  <p className={style1.error}>{errors.fullname}</p>
-                )} */}
           </div>
 
-          <div className={style1.email}>
-            <label className={style1.label}>Change Email</label>
+          <div className={styles.row}>
+            <label className={styles.label1}>UserName:</label>
             <input
-              className={style1.input}
-              type="email"
+              className={styles.input1}
+              type="text"
               name="email"
-              value={usr.email}
-              onChange={handlechange}
-              //   value={values.email}
-              //   onChange={handlechange}
+              defaultValue={userData.username}
+              disabled
             ></input>
-            {/* {errors.email && <p className={style1.error}>{errors.email}</p>} */}
           </div>
 
-          <div className={style1.password}>
-            <label className={style1.label}>Change Password</label>
-            {/* <span onClick={handleToggle1}>
-                  <Icon icon={icon} size={20} />
-                </span> */}
+          <div className={styles.row}>
+            <label className={styles.label1}>Email:</label>
+
             <input
-              className={style1.input}
-              type="password"
-              value={usr.password}
-              onChange={handlechange}
-              //   type={type}
+              className={styles.input1}
               name="password"
-              //   value={values.password}
-              //   onChange={handlechange}
+              defaultValue={userData.email}
+              disabled
             ></input>
-
-            {/* {errors.password && (
-                  <p className={style1.error}>{errors.password}</p>
-                )} */}
           </div>
 
-          {/* <div className={style1.password}>
-                <label className={style1.label}> Confirm Password</label>
-                <span onClick={handleToggle2}>
-                  <Icon icon={icon2} size={20} />
-                </span>
-                <input
-                  className={style1.input}
-                  type="password"
-                  name="confirm_password"
-                  value={values.confirm_password}
-                  onChange={handlechange}
-                ></input>
-                {errors.confirm_password && (
-                  <p className={style1.error}>{errors.confirm_password}</p>
+          <div className={styles.row}>
+            <label className={styles.label1}>Skills:</label>
+            <div className={styles.skillsSection}>
+              <div className={`${styles.skillsDiv}`}>
+                {uid === profilerId && (
+                  <>
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setInputSkill(e.target.value);
+                      }}
+                    />
+                    <button
+                      className={styles.skillItemValueAddBtn}
+                      type="button"
+                      onClick={() => {
+                        if (inputSkill !== "") handleSkillAdd(inputSkill);
+                      }}
+                    >
+                      Add
+                    </button>
+                  </>
                 )}
-              </div> */}
 
-          <div>
-            <button className={style1.submit}>Edit</button>
+                <div className={styles.skillsList}>
+                  {userSkills &&
+                    userSkills.map((v) => (
+                      <div className={styles.skillItem}>
+                        <div className={styles.skillItemValue}>{v}</div>
+                        {uid === profilerId && (
+                          <button
+                            type="button"
+                            className={styles.skillItemValueDelBtn}
+                            onClick={() => {
+                              handleSkillDelete(v);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <label className={styles.label1}>About:</label>
+            <textarea
+              rows="6"
+              cols="46"
+              className={styles.about}
+              defaultValue={userData.about}
+              onChange={(e) => {
+                setUpdateData((prev) => {
+                  prev.about = e.target.value;
+                  // console.log(prev);
+                  return { ...prev };
+                });
+              }}
+            ></textarea>
           </div>
         </form>
+        {/* <div className={styles.row}>
+          <p className={styles.heading}>Services Posted:</p>
+          <div className={styles.servicesItemDiv}>
+            {userData.services.map((item) => (
+              <div className={styles.servicesItem}>
+                <Link to={`/service/${uid}/${item._id}`}>{item.title}</Link>
+              </div>
+            ))}
+          </div>
+        </div> */}
+        {uid === profilerId && (
+          <div className={styles.buttonDiv}>
+            {!editable && (
+              <button
+                type="button"
+                className={styles.edit}
+                onClick={() => {
+                  handleEdit();
+                }}
+              >
+                Edit
+              </button>
+            )}
+            {editable && (
+              <button
+                type="button"
+                className={styles.update}
+                onClick={() => {
+                  handleUpdate();
+                }}
+              >
+                Update
+              </button>
+            )}
+          </div>
+        )}
+
+        <div className={styles.wishlistWrapper}>
+          {/* <h2>Services Posted</h2> */}
+          <div className={styles.serviceDiv}>
+            {userData.services &&
+              userData.services.map((data) => (
+                <div className={styles.card}>
+                  <img src={pic0} alt="John" className={styles.image} />
+                  <h3 className={styles.title}>{data.title}</h3>
+                  {/* <p className={styles.title}>CEO & Founder, Example</p> */}
+                  <p className={styles.price}>₹{data.price}</p>
+                  <p>
+                    <button className={styles.goToServiceButton}>
+                      <Link
+                        to={`/service/${uid}/${data._id}`}
+                        style={{
+                          textDecoration: "none",
+                          fontSize: "18px",
+                          color: "white",
+                        }}
+                      >
+                        {" "}
+                        <i class="fa fa-search" aria-hidden="true"></i>{" "}
+                      </Link>
+                    </button>
+                  </p>
+                </div>
+              ))}
+          </div>
+        </div>
       </div>
-    </div>
+    )
   );
 }
 

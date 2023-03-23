@@ -48,7 +48,7 @@ function Services({ data }) {
             {/* <p className={styles.title}>CEO & Founder, Example</p> */}
             <p className={styles.price}>₹{data.price}</p>
             <div className={styles.userData}>
-              <Link to={`profile/${data.id}`}>
+              <Link to={`/profile/${userId}/${data.seller._id}`}>
                 <img className={styles.userImg} src={profpic1} alt="" />
               </Link>
               <p className={styles.userName}>{data.seller.fullname}</p>

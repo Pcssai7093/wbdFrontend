@@ -63,9 +63,11 @@ function App() {
           </Route>
 
           {/* Routes that require authorization */}
-          <Route exact path="/profile/:uid">
-            {/* <Navbar /> */}
-            <ProfilePage />
+          <Route exact path="/profile/:uid/:profilerId">
+            <div className="HomeWrapper">
+              <Navbar />
+              <ProfilePage />
+            </div>
           </Route>
           <Route exact path="/admin/:uid">
             <Admin />
@@ -129,7 +131,9 @@ function App() {
               method="post"
               enctype="multipart/form-data"
             >
-              <input type="file" name="image" id="" />
+              <input type="text" name="name" />
+              <input type="file" name="images" id="" multiple />
+              {/* <input type="file" name="image2" id="" /> */}
               <input type="submit" value="upload" />
             </form>
           </Route>

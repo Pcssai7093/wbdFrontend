@@ -112,12 +112,12 @@ export default function Messenger() {
         }
       });
 
-      setTimeout(() => {
-        socket.emit(
-          "sendMessage",
-          (currentUserId, currentConversationUser, "my message")
-        );
-      }, 1000);
+      // setTimeout(() => {
+      //   socket.emit(
+      //     "sendMessage",
+      //     (currentUserId, currentConversationUser, "my message")
+      //   );
+      // }, 1000);
     });
   }, [socket]);
 

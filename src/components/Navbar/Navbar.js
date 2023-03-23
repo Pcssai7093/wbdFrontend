@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useHistory } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useContext, useEffect, useState } from "react";
 import uniqid from "uniqid";
@@ -15,6 +15,7 @@ function Navbar() {
   const params = useParams();
   const uid = params.uid;
   const cookies = new Cookies();
+  const history = useHistory();
 
   // const uid = 1;
   const [userName, setUserName] = useState();
@@ -105,18 +106,20 @@ function Navbar() {
               }
             >
               Chat
-              <sup
-                style={{
-                  backgroundColor: unseen !== 0 ? "white" : "",
-                  color: "black",
-                  width: "40px",
-                  borderRadius: "20px",
-                  fontSize: "15px",
-                  padding: "5px 10px",
-                }}
-              >
-                {unseen !== 0 ? unseen : ""}
-              </sup>
+              {!path.includes("/chat") && (
+                <sup
+                  style={{
+                    backgroundColor: unseen !== 0 ? "white" : "",
+                    color: "black",
+                    width: unseen !== 0 ? "40px" : "",
+                    borderRadius: "20px",
+                    fontSize: "15px",
+                    padding: unseen !== 0 ? "5px 10px" : "",
+                  }}
+                >
+                  {unseen !== 0 ? unseen : ""}
+                </sup>
+              )}
               {/* <i class="fa fa-home"></i> */}
               {/* <i class="fa fa-heart" aria-hidden="true"></i> */}
             </Link>
@@ -143,7 +146,7 @@ function Navbar() {
               {/* <i class="fa fa-upload" aria-hidden="true"></i> */}
             </Link>
             <Link
-              to={`/profile/${uid}`}
+              to={`/profile/${uid}/${uid}`}
               className={
                 path.includes("/profile") || path.includes("/service")
                   ? styles.active
@@ -155,12 +158,9 @@ function Navbar() {
             </Link>
             <Link
               className={styles.logOutLink}
-              to="/"
               onClick={() => {
-                dispatch({
-                  type: "setFalse1",
-                });
-                localStorage.removeItem("author");
+                cookies.remove("jwtToken");
+                history.push("/signin");
               }}
             >
               LogOut
