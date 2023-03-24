@@ -156,21 +156,23 @@ function Description() {
             <div className={styles.productDescription}>
               {serviceData.description}
             </div>
-            <div
-              onClick={() => {
-                handleAddToWishlist(serviceData._id);
-              }}
-              className={styles.addToWishlist}
-            >
-              Add to Wishlist
-            </div>
-            <div
-              onClick={() => {
-                handleChatClick(uid, serviceData.seller._id);
-              }}
-              className={styles.contact}
-            >
-              Chat
+            <div className={styles.buttons}>
+              <div
+                onClick={() => {
+                  handleAddToWishlist(serviceData._id);
+                }}
+                className={styles.addToWishlist}
+              >
+                Add to Wishlist
+              </div>
+              <div
+                onClick={() => {
+                  handleChatClick(uid, serviceData.seller._id);
+                }}
+                className={styles.contact}
+              >
+                Chat
+              </div>
             </div>
           </div>
         </div>

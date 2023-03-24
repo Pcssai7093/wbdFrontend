@@ -52,35 +52,8 @@ function Navbar() {
     <div>
       {userName && (
         <div className={styles.navbar}>
-          {/* <div className={styles.topnav} id="myTopnav">
-            <Link
-              to={`/home/${uid}`}
-              className={path.includes("/home") ? styles.active : "inactive"}
-            >
-              Home
-            </Link>
-            <Link
-              to={`/wishlist/${uid}`}
-              className={
-                path.includes("/wishlist") ? styles.active : "inactive"
-              }
-            >
-              Wishlist
-            </Link>
-            <Link
-              to={`/post/${uid}`}
-              className={path.includes("/post") ? styles.active : "inactive"}
-            >
-              Post
-            </Link>
-            <Link
-              to={`/profile/${uid}`}
-              className={path.includes("/profile") ? styles.active : "inactive"}
-            >
-              Profile
-            </Link> */}
           <div className={styles.header}>
-            {/* <img src={logo2} className={styles.logo} alt="logo" />{" "} */}
+            <div className={styles.greeting}>Hey!!</div> {userName}
           </div>
 
           <div className={styles.topnav} id="myTopnav">
