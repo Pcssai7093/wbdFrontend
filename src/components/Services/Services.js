@@ -42,7 +42,15 @@ function Services({ data }) {
       <div className={styles.serviceDiv}>
         {data.map((data) => (
           <div className={styles.card}>
-            <img src={arr[++itr % mod]} alt="John" className={styles.image} />
+            <img
+              src={
+                data?.productImages.length > 0
+                  ? data?.productImages[0]
+                  : arr[++itr % mod]
+              }
+              alt="John"
+              className={styles.image}
+            />
 
             <h3 className={styles.title}>{data.title}</h3>
             {/* <p className={styles.title}>CEO & Founder, Example</p> */}

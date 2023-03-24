@@ -87,7 +87,9 @@
 
 .image{
     margin-top: 5px;
-    width: 170px;
+    width: 230px;
+    height:230px;
+    border-radius:10px;
 }
 
 .serviceDiv i{

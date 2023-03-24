@@ -101,38 +101,18 @@ function Description() {
           <div className={styles.gallery}>
             <img
               className={`${styles.mainImg}`}
-              src={mainImage}
+              src={
+                serviceData?.productImages.length > 0
+                  ? serviceData?.productImages[1]
+                  : mainImage
+              }
               alt=""
               srcset=""
             />
             <div className={styles.subImgs}>
-              <img
-                className={styles.subImg}
-                src={PIm3}
-                alt=""
-                srcset=""
-                onClick={() => {
-                  selectImage(PIm3);
-                }}
-              />
-              <img
-                className={styles.subImg}
-                src={PIm2}
-                alt=""
-                srcset=""
-                onClick={() => {
-                  selectImage(PIm2);
-                }}
-              />
-              <img
-                className={styles.subImg}
-                src={PIm4}
-                alt=""
-                srcset=""
-                onClick={() => {
-                  selectImage(PIm4);
-                }}
-              />
+              <img className={styles.subImg} src={PIm3} alt="" srcset="" />
+              <img className={styles.subImg} src={PIm2} alt="" srcset="" />
+              <img className={styles.subImg} src={PIm4} alt="" srcset="" />
             </div>
           </div>
           <div className={styles.desc}>

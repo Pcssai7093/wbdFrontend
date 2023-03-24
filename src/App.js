@@ -30,6 +30,7 @@ import Messenger from "./components/Chat/messenger/Messenger";
 import Home from "./components/Myadmin/Home/Home";
 import loginContext from "./index";
 import Otp from "./components/Signup/otp";
+import OldLanding from "./components/Landinpage/OldLanding";
 
 function App() {
   const [color, setColor] = useState(true);
@@ -42,12 +43,13 @@ function App() {
         <Switch>
           {/* Routes that do not require authorization */}
           <Route exact path="/">
-            <Navbar1 />
+            {/* <Navbar1 />
             <Hero />
             <Analytics />
             <Newsletter />
             <Cards />
-            <Footer />
+            <Footer /> */}
+            <OldLanding />
           </Route>
           <Route exact path="/signin">
             <LoginPage />

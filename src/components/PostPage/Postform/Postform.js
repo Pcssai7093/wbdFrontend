@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import styles from "./Postform.module.css";
 import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
+import loginContext from "../../../index";
+import Cookies from "universal-cookie";
 
 const Postform = () => {
+  const loginStatusObj = useContext(loginContext);
   const history = useHistory();
   const params = useParams();
   const uid = params.uid;
@@ -78,7 +81,7 @@ const Postform = () => {
       temp_err_obj.bprice = 0;
     }
 
-    if (images.current.length != 2) {
+    if (images.current.files.length != 2) {
       alert("2 images input should be given");
     } else {
       if (flag === 0 && parseInt(pb) >= 0) {
@@ -112,7 +115,7 @@ const Postform = () => {
   };
 
   console.log("hello");
-  return true ? (
+  return loginStatusObj.isLogin ? (
     <>
       <div className={"container " + styles.container}>
         <form onSubmit={addposthandler} enctype="multipart/form-data">

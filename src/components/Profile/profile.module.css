@@ -1,5 +1,14 @@
 .profilePageDiv{
-    padding: 30px 0px;
+    padding: 20px 0px;
+    width:700px;
+    background-color: white;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+.profileIcon{
+  width:200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .searchComp{
     margin: 0 auto;
@@ -9,10 +18,12 @@
     padding: 20px;
     border-radius: 20px;
     margin-bottom: 20px;
+    /* text-align: center; */
 }
 .searchComp.disabled{
     pointer-events: none;
 }
+
 .searchComp input, select {
     width: 60%;
     padding: 5px 20px;
@@ -22,7 +33,9 @@
   }
   
 .row{
+    width: 100%;
     display:table-row;
+    text-align: center;
   }
 
   .row .label1{
@@ -120,7 +133,7 @@
 /* * services styles */
 
 .serviceBox{
-  width:65vw;
+  /* width:65vw; */
   float:right;
   margin-left: 15px;
   margin-top: 10px;
@@ -130,21 +143,22 @@
 }
 .wishlistWrapper{
   background-color: white;
-  width:80vw;
+  /* width:80vw; */
   margin:0px auto;
   border-radius: 20px;
   min-height: 500px;
-  padding: 20px;
+  padding: 20px 10px;
 }
 .serviceDiv{
   margin-top: 10px;
   display: grid;
   /*  */
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 1fr;
   /* grid-template-columns: auto auto auto; */
-  column-gap: 20px;
+  /* column-gap: 10px; */
   row-gap: 40px;
+  width:700px;
   justify-content: center;
   
 }
@@ -208,7 +222,9 @@
 
 .image{
   margin-top: 5px;
-  width: 170px;
+  width: 230px;
+  height: 230px;
+  border-radius: 10px;
 }
 
 .serviceDiv i{
