@@ -43,13 +43,13 @@ function App() {
         <Switch>
           {/* Routes that do not require authorization */}
           <Route exact path="/">
-            {/* <Navbar1 />
+            <Navbar1 />
             <Hero />
             <Analytics />
             <Newsletter />
             <Cards />
-            <Footer /> */}
-            <OldLanding />
+            <Footer />
+            {/* <OldLanding /> */}
           </Route>
           <Route exact path="/signin">
             <LoginPage />
@@ -63,19 +63,13 @@ function App() {
           <Route exact path="/Forms">
             <Forms />
           </Route>
-
+          Hello
           {/* Routes that require authorization */}
           <Route exact path="/profile/:uid/:profilerId">
             <div className="HomeWrapper">
               <Navbar />
               <ProfilePage />
             </div>
-          </Route>
-          <Route exact path="/admin/:uid">
-            <Admin />
-            <Sidebar />
-            <MainDash />
-            <AdminHomePage />
           </Route>
           <Route exact path="/post/:uid">
             <Navbar />
@@ -112,7 +106,6 @@ function App() {
               {/* <Space /> */}
             </div>
           </Route>
-
           <Route exact path="/chat/:uid/">
             <div className="HomeWrapper">
               <Navbar />

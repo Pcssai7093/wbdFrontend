@@ -13,7 +13,7 @@
     "axios": "^1.1.2",
     "browserify-fs": "^1.0.0",
     "child_process": "^1.0.2",
-    "framer-motion": "^7.6.18",
+    "framer-motion": "^7.10.3",
     "fs": "^0.0.1-security",
     "json-server": "^0.17.0",
     "react": "^18.2.0",

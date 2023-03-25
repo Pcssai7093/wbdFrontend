@@ -15,7 +15,10 @@ const Postform = () => {
   const pc = useRef();
   const bp = useRef();
   const images = useRef();
-  // const [errs,seterrs] = useState(0)
+  const image1 = useRef();
+  const image2 = useRef();
+
+  const [errs, seterrs] = useState(0);
   const [err, seterr] = useState({
     name: 0,
     desc: 0,
@@ -24,6 +27,10 @@ const Postform = () => {
 
   const addposthandler = (e) => {
     e.preventDefault();
+
+    console.log(image1.current.files[0]);
+    console.log(image2.current.files[0]);
+
     let namp = pnam.current.value;
     const desp = pdes.current.value;
     const cp = pc.current.value;
@@ -81,13 +88,13 @@ const Postform = () => {
       temp_err_obj.bprice = 0;
     }
 
-    if (images.current.files.length != 2) {
+    if (image1.current.files.length != 1 && image2.current.files.length != 1) {
       alert("2 images input should be given");
     } else {
       if (flag === 0 && parseInt(pb) >= 0) {
         let formData = new FormData();
-        formData.append("images", images.current.files[0]);
-        formData.append("images", images.current.files[1]);
+        formData.append("images", image1.current.files[0]);
+        formData.append("images", image2.current.files[0]);
         formData.append("title", namp);
         formData.append("description", desp);
         formData.append("price", pb);
@@ -243,15 +250,27 @@ const Postform = () => {
             <p className={styles.err3}>Please Enter a valid price</p>
           )} */}
           <div className={styles.row}>
-            <label htmlFor="">Select Images</label>
+            <label htmlFor="">Select Thumbnail Image</label>
             <input
               type="file"
               src=""
               alt=""
-              name="images"
+              name="image1"
               accept="image/*"
-              multiple
-              ref={images}
+              ref={image1}
+              // onChange={(e) => {
+              //   console.log(e);
+              // }}
+            />
+
+            <label htmlFor="">Select Description Image</label>
+            <input
+              type="file"
+              src=""
+              alt=""
+              name="image2"
+              accept="image/*"
+              ref={image2}
               // onChange={(e) => {
               //   console.log(e);
               // }}
