@@ -262,10 +262,14 @@ function Search() {
             <option value={0} selected hidden>
               Select
             </option>
-            <option value="web dev">Category-1</option>
-            <option value="programming">Category-1</option>
-            <option value="3">Category-1</option>
-            <option value="4">Category-4</option>
+            <option value="programming">Programming</option>
+            <option value="web development">Web Development</option>
+            <option value="cloud computing">Cloud Computing</option>
+            <option value="communication networks">
+              Communication Networks
+            </option>
+            <option value="machine learning">Machine Learning</option>
+            <option value="game development">Game Development</option>
           </select>
           <label htmlFor="">Price(0-{filter.price})</label>
           <input
